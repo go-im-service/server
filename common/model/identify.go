@@ -1,5 +1,7 @@
 package model
 
+import "fmt"
+
 const (
 	ClientIdentityTypeUser         = 1 // 一般的聊天用户
 	ClientIdentityTypeGroup        = 2 // 群
@@ -8,7 +10,17 @@ const (
 )
 
 type ClientIdentity struct {
-	AppID    int   `json:"app_id"`
-	Type     int   `json:"type"`
-	ClientID int64 `json:"client_id"`
+	AppID          int   `json:"app_id"`
+	Type           int   `json:"type"`
+	ConnectPartyID int64 `json:"connect_party_id"`
+}
+
+func (c *ClientIdentity) GetID() string {
+	return fmt.Sprintf("%v:%v:%v", c.AppID, c.Type, c.ConnectPartyID)
+}
+
+type ConnectServerIdentity struct {
+	ClusterHost string `json:"cluster_host"`
+	ServerHost  string `json:"server_host"`
+	Port        int    `json:"port"`
 }
